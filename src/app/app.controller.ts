@@ -1,4 +1,4 @@
-import { Controller, Get, Header, Post } from '@nestjs/common';
+import { Controller, Get, Header, Param, Post, Redirect } from '@nestjs/common';
 import { Request } from 'express';
 
 interface body {
@@ -6,7 +6,7 @@ interface body {
   id: number;
 }
 
-@Controller()
+@Controller('cats')
 export class CatsController {
   @Post()
   @Header('Cache-Control', 'none')
@@ -16,6 +16,12 @@ export class CatsController {
 
   @Get()
   findAll(): string {
-    return 'This actions returns all cats';
+    return "I'm all the cats";
+  }
+
+  @Get(':id')
+  findOne(@Param() params): string {
+    console.log(params.id);
+    return `This action returns ${params.id} cat`;
   }
 }
